@@ -1,5 +1,6 @@
 package br.ufjf.projeto.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 
 import javax.persistence.*;
@@ -19,6 +20,10 @@ public class Produto implements Serializable {
     private String nome;
     private Double preco;
 
+    public Produto() {
+    }
+
+    @JsonBackReference
     @ManyToMany
     @JoinTable(
             name = "PRODUTO_CATEGORIA",
