@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="/categorias")
+@RequestMapping(value = "/categorias")
 public class CategoriaResources {
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Categoria> listar(){
-        Categoria cat1 = new Categoria(1,"Informática");
-        Categoria cat2 = new Categoria(2,"Escritório");
+    public List<Categoria> listar() {
+        Categoria cat1 = new Categoria(1, "Informática");
+        Categoria cat2 = new Categoria(2, "Escritório");
 
         List<Categoria> lista = new ArrayList<>();
 
