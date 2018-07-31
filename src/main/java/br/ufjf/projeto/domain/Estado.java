@@ -1,5 +1,6 @@
 package br.ufjf.projeto.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -19,7 +20,9 @@ public class Estado implements Serializable {
     private String nome;
 
 
-    @JsonManagedReference
+
+    //@JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "estado")
     private List<Cidade> cidades = new ArrayList<>();
 

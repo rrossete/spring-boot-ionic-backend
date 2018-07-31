@@ -1,6 +1,7 @@
 package br.ufjf.projeto.domain;
 
 import br.ufjf.projeto.domain.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,8 +20,10 @@ public class Cliente implements Serializable {
     private String cpfOuCnpj;
     private Integer tipoCliente;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos = new ArrayList<>();
+
 
     @ElementCollection//telefones é uma entidade fraca
     @CollectionTable(name = "TELEFONE")
