@@ -1,6 +1,7 @@
 package br.ufjf.projeto;
 
 import br.ufjf.projeto.domain.*;
+import br.ufjf.projeto.domain.enums.EstadoPagamento;
 import br.ufjf.projeto.domain.enums.TipoCliente;
 import br.ufjf.projeto.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -31,6 +33,12 @@ public class ProjetoApplication implements CommandLineRunner {
 
     @Autowired
     EnderecoRepository enderecoRepository;
+
+    @Autowired
+    PagamentoRepository pagamentoRepository;
+
+    @Autowired
+    PedidoRepository pedidoRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(ProjetoApplication.class, args);
@@ -79,6 +87,25 @@ public class ProjetoApplication implements CommandLineRunner {
 
         clienteRepository.saveAll(Arrays.asList(cliente1));
         enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
+
+        SimpleDateFormat  dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
+
+        Pedido pedido1 = new Pedido(null, dateFormat.parse("30/09/2017 10:32"),cliente1,endereco1);
+        Pedido pedido2 = new Pedido(null, dateFormat.parse("10/10/2017 19:35"),cliente1,endereco2);
+
+        PagamentoComCartao comCartao1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO,pedido1,6);
+        pedido1.setPagamento(comCartao1);
+
+        PagamentoComBoleto comBoleto= new PagamentoComBoleto(null, EstadoPagamento.PENDENTE,pedido2,null , dateFormat.parse("20/10/2017 00:00"));
+        pedido2.setPagamento(comBoleto);
+
+        cliente1.getPedidos().addAll(Arrays.asList(pedido1,pedido2));
+
+        pedidoRepository.saveAll(Arrays.asList(pedido1,pedido2));
+        pagamentoRepository.saveAll(Arrays.asList(comBoleto,comCartao1));
+
+
+
 
     }
 }
