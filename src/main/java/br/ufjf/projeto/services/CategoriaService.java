@@ -4,6 +4,7 @@ import br.ufjf.projeto.domain.Categoria;
 import br.ufjf.projeto.repositories.CategoriaRepository;
 import br.ufjf.projeto.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -33,5 +34,17 @@ public class CategoriaService {
 
         find(categoria.getId());
         return categoriaRepository.save(categoria);
+    }
+
+    public void delete(Integer id){
+
+        find(id);
+        try {
+            categoriaRepository.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+
+            throw new br.ufjf.projeto.services.exceptions.DataIntegrityViolationException
+                    ("Não é possivel excluir uma categoria que possui produtos");
+        }
     }
 }
