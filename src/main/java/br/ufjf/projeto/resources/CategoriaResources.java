@@ -1,6 +1,7 @@
 package br.ufjf.projeto.resources;
 
 import br.ufjf.projeto.domain.Categoria;
+import br.ufjf.projeto.dto.CategoriaDTO;
 import br.ufjf.projeto.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -17,18 +19,6 @@ public class CategoriaResources {
 
     @Autowired
     CategoriaService categoriaService;
-
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Categoria> listar() {
-        Categoria cat1 = new Categoria(1, "Informática");
-        Categoria cat2 = new Categoria(2, "Escritório");
-
-        List<Categoria> lista = new ArrayList<>();
-
-        lista.add(cat1);
-        lista.add(cat2);
-        return lista;
-    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Categoria> find(@PathVariable Integer id) {
@@ -64,5 +54,15 @@ public class CategoriaResources {
         categoriaService.delete(id);
 
         return ResponseEntity.noContent().build();
+   }
+
+   @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<CategoriaDTO>> findAll(){
+
+        List<Categoria> listCategorias = categoriaService.findAll();
+
+        List<CategoriaDTO> categoriaDTOS = listCategorias.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList()); // transforma um tipo de lista, para outro tipo
+
+        return ResponseEntity.ok().body(categoriaDTOS);
    }
 }
