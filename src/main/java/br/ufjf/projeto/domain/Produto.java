@@ -28,7 +28,7 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "PRODUTO_CATEGORIA",
