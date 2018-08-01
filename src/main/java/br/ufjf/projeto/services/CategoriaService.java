@@ -22,4 +22,10 @@ public class CategoriaService {
                 "Objeto não encontrado! Id:" + id + ",  Tipo: " + Categoria.class.getName()
         ));
     }
+
+    public Categoria insert(Categoria categoria){
+
+        categoria.setId(null);//metodo de inserção, ou seja, caso exista um id, sera um metodo de atualização
+        return categoriaRepository.save(categoria);
+    }
 }
