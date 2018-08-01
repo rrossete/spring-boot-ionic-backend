@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Optional;
-
 @Controller
 @RequestMapping(value = "/clientes")
 public class ClienteResources {
@@ -18,9 +16,9 @@ public class ClienteResources {
     ClienteService clienteService;
 
     @RequestMapping(value = "/{id}")
-    public ResponseEntity<?> busca(@PathVariable Integer id){
+    public ResponseEntity<Cliente> busca(@PathVariable Integer id){
 
-        Cliente cliente = clienteService.busca(id);
+        Cliente cliente = clienteService.find(id);
 
         return ResponseEntity.ok(cliente);
     }

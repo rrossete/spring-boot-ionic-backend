@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Controller
 @RequestMapping(value = "/pedidos")
 public class PedidoResources {
@@ -18,9 +16,9 @@ public class PedidoResources {
     PedidoService pedidoService;
 
     @RequestMapping(value = "/{id}")
-    public ResponseEntity<?> find(@PathVariable Integer id){
+    public ResponseEntity<Pedido> find(@PathVariable Integer id){
 
-        Pedido pedido = pedidoService.buscar(id);
+        Pedido pedido = pedidoService.find(id);
 
         return ResponseEntity.ok(pedido);
 

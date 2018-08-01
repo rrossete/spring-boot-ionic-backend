@@ -17,9 +17,9 @@ public class EstadoResources {
     EstadoService estadoService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> find(@PathVariable Integer id) {
+    public ResponseEntity<Estado> find(@PathVariable Integer id) {
 
-        Estado estado = estadoService.busca(id);
+        Estado estado = estadoService.find(id);
         return ResponseEntity.ok(estado);
     }
 }

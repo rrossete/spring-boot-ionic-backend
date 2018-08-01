@@ -15,7 +15,7 @@ public class EstadoService {
     @Autowired
     EstadoRepository estadoRepository;
 
-   public Estado busca(Integer id){
+   public Estado find(Integer id){
 
        Optional<Estado> estado = estadoRepository.findById(id);
 
